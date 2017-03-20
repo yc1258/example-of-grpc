@@ -1,0 +1,47 @@
+syntax = "proto3";
+package proto;
+
+service Proto {
+	rpc func1 (func1_Request) returns (func1_Reply) {}
+
+	rpc func2 (func2_Request) returns (func2_Reply) {}
+
+	rpc func3 (func3_Request) returns (func3_Reply) {}
+}
+
+message func1_Request {
+	string param1 = 1;
+	int32 param2 = 2;
+	uint32 param3 = 3;
+}
+
+message Structure{
+	string param1 = 1;
+	string param2 = 2;
+}
+
+message func1_Reply {
+	Structure id = 1;
+	int32 type = 2;
+}	
+
+message func2_Request {
+	string param1 = 1;
+}	
+
+message func2_Reply {
+	Structure id = 1;
+}	
+
+message list_pair{
+	string param1 = 1;
+	bool param2 = 2;
+};
+
+message func3_Request {
+	int32 message = 1;
+}
+
+message func3_Reply {
+	repeated list_pair result = 1;
+}
