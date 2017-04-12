@@ -1,21 +1,21 @@
 
-#include "function.h"
+#include "server_func.h"
 
-boost::shared_ptr<function> function::func_instance;
+boost::shared_ptr<server_func> server_func::func_instance;
 
-std::map<sss_oper_t *, boost::any> function::callbakMap_;
+std::map<int, boost::any> server_func::callbakMap_;
 
-boost::shared_ptr<function> function::get_instance()
+boost::shared_ptr<server_func> server_func::get_instance()
 {
 	if(!func_instance)
 	{
-		func_instance =boost::shared_ptr<function>(new function);
+		func_instance =boost::shared_ptr<server_func>(new server_func);
 	}
 	
 	return func_instance;
 }
 
-int function::func1(const char *param1, int param12, uint16_t param3, const SipInviteCallback &cb)
+int server_func::func1(const char *param1, int param2, uint16_t param3, const InviteCallback &cb)
 {	
 	int tag;
 	callbakMap_[tag] = cb;
@@ -25,7 +25,7 @@ int function::func1(const char *param1, int param12, uint16_t param3, const SipI
     return 0;
 }
 
-struct_ptr function::func2(string param1)
+struct_ptr server_func::func2(string param1)
 {	
 	struct_ptr id = boost::shared_ptr<Structure>(new Structure);
 	/*
@@ -34,7 +34,7 @@ struct_ptr function::func2(string param1)
     return id;
 }
 
-std::vector<std::pair<string, bool> > function::func3()
+std::vector<std::pair<string, bool> > server_func::func3()
 {
 	std::vector<std::pair<string, bool> > clist;
 	std::map<string, bool>::iterator it;
@@ -45,14 +45,14 @@ std::vector<std::pair<string, bool> > function::func3()
 	return clist;
 }
 
-void function::func1callback(int tag,int type)
+void server_func::func1callback(int tag,int type)
 {
 	/*
 	do something
 	*/
 	if (callbakMap_.find(tag) != callbakMap_.end())
 	{
-		SipInviteCallback callback = boost::any_cast<SipInviteCallback>(callbakMap_[tag]);
+		InviteCallback callback = boost::any_cast<InviteCallback>(callbakMap_[tag]);
 		callbakMap_.erase(tag);
 		callback(id, type);
 	}

@@ -6,7 +6,7 @@
 #include <grpc++/grpc++.h>
 #include <grpc/support/log.h>
 
-#include "function.h"
+#include "server_func.h"
 
 using grpc::Server;
 using grpc::ServerAsyncResponseWriter;
